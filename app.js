@@ -1,0 +1,16 @@
+// Full Documentation - https://www.turbo360.co/docs
+const vertex = require('vertex360')({ site_id: process.env.TURBO_APP_ID });
+
+const app = vertex.app(); // initialize app
+
+// import routes
+const index = require('./routes/index');
+const api = require('./routes/api');
+const auth = require('./routes/auth');
+
+// set routes
+app.use('/', index);
+app.use('/api', api); // sample API Routes
+app.use('/auth', auth);
+
+module.exports = app;

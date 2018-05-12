@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Highdmin - Responsive Bootstrap 4 Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+       <!-- App favicon -->
+        <link rel="shortcut icon" href="{{cdn}}/images/favicon.ico">
+
+         <!-- App css -->
+        <link href="{{cdn}}/dist/css/style.min.css" rel="stylesheet" type="text/css" />
+
+        <script src="{{cdn}}/js/modernizr.min.js"></script>
+    </head>
+
+
+    <body class="account-pages">
+
+        <!-- Begin page -->
+        <div class="accountbg" style="background: url('assets/images/bg-1.jpg');background-size: cover;"></div>
+
+        <div class="wrapper-page account-page-full">
+
+            <div class="card">
+                <div class="card-block">
+
+                    <div class="account-box">
+
+                        <div class="card-box p-5">
+                            <h2 class="text-uppercase text-center pb-4">
+                                <a href="index.html" class="text-success">
+                                    <span><img src="assets/images/logo.png" alt="" height="26"></span>
+                                </a>
+                            </h2>
+
+                            <form class="" action="#">
+
+                                <div class="form-group m-b-20 row">
+                                    <div class="col-12">
+                                        <label for="roomcategory">Room Category</label>
+                                        <input id="room-category" class="form-control"  placeholder="Category">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row m-b-20">
+                                    <div class="col-12">
+                                        <label for="description">Description</label>
+                                        <input id="room-description" class="form-control" type="text"  placeholder="Enter your description">
+                                        <input id="room-user" type="hidden" value="{{user.id}}" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row text-center m-t-10">
+                                    <div class="col-12">
+                                        <button id="btn-add-room" style="margin-top:30px" class="btn btn-block btn-custom waves-effect waves-light" type="submit">ADD ROOM</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="m-t-40 text-center">
+                <p class="account-copyright">2018 © Highdmin. - Coderthemes.com</p>
+            </div>
+
+        </div>
+
+
+
+        <!-- jQuery  -->
+        <script type="text/javascript" src="{{cdn}}/dist/js/vendor.min.js"></script>
+       
+        <!-- App js -->
+        <script type="text/javascript" src="{{cdn}}/dist/js/app.min.js"></script>
+
+        <script type="text/javascript">
+          (function(){
+            $('#btn-add-room').click(function(event){
+              event.preventDefault()
+              var room = {
+                category: $('#room-category').val().trim(),
+                description: $('#room-description').val().trim(),
+                user: $('#room-user').val()
+              }
+
+              if (room.category.length == 0){
+                alert('Please enter a room CATEGORY')
+                return
+              }
+
+              if (room.description.length == 0){
+                alert('Please enter room DESCRIPTION')
+                return
+              }
+
+              console.log('ADD ROOM: ' + JSON.stringify(room))
+              $.ajax({
+                url : '/api/room',
+                type: 'POST',
+                data: room,
+                success: function(data, textStatus, jqXHR){
+                    console.log(JSON.stringify(data))
+                    window.location.href = '/'
+
+                },
+                error: function (jqXHR, textStatus, err){
+                    alert('Error: ' + err.message)
+                }
+              })
+
+            })
+
+          })()
+        </script>
+    </body>
+</html>
